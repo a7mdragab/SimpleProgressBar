@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="SimpleProgressBar">
+
+        <attr name="SPB_isIndeteminate" format="boolean"/>
+        <attr name="SPB_text" format="string"/>
+
+        <attr name="SPB_style" format="enum">
+            <enum name="circular" value="0"/>
+            <enum name="circular_Small" value="1"/>
+            <enum name="circular_Large" value="2"/>
+            <enum name="Horizontal" value="3"/>
+        </attr>
+    </declare-styleable>
+
+</resources>
