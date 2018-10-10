@@ -2,10 +2,8 @@
 <resources>
 
     <declare-styleable name="SimpleProgressBar">
-
-        <attr name="SPB_isIndeteminate" format="boolean"/>
+        <attr name="SPB_isIndeterminate" format="boolean" />
         <attr name="SPB_text" format="string"/>
-
         <attr name="SPB_style" format="enum">
             <enum name="circular" value="0"/>
             <enum name="circular_Small" value="1"/>

@@ -1,16 +1,13 @@
 package elshab7.engineering.simpleprogressdialogapp;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ProgressBar;
-import android.widget.TextView;
+import android.view.View;
 
 import elshab7.engineering.simpleprogressdialog.SimpleProgressBar;
 
@@ -77,6 +74,8 @@ public class MainActivity extends AppCompatActivity {
                 simpleProgressBarCircular3.setText("");
                 simpleProgressBarHorizontal.setText("");
                 //simpleProgressBarCircular1.setProgressText("");
+                //simpleProgressBarHorizontal.setCircular();
+
 
                 simpleProgressBarCircular1.setIndeterminate(true);
                 simpleProgressBarCircular2.setIndeterminate(true);
@@ -127,13 +126,21 @@ public class MainActivity extends AppCompatActivity {
                 simpleProgressBarCircular2.setText("Loading2...");
                 simpleProgressBarCircular3.setText("Loading3...");
 
+                simpleProgressBarHorizontal.setText("Loading...");
+                simpleProgressBarHorizontal.setProgressText("Ok");
+                simpleProgressBarHorizontal.setIndeterminate(true);
+                simpleProgressBarHorizontal.show();
+
                 //simpleProgressBarCircular1.setIndeterminate(true);
-                simpleProgressBarCircular1.runIndeterminateForTime(3, new SimpleProgressBar.IndeterminateTimingCallback() {
+                simpleProgressBarHorizontal.runIndeterminateForTime(3, new SimpleProgressBar.IndeterminateTimingCallback() {
                     @Override
                     public void onFinish() {
-                        simpleProgressBarCircular1.setIndeterminate(false);
-                        simpleProgressBarCircular1.setProgressWithTextPercentage(100);
-                        simpleProgressBarCircular1.setText("Done...");
+                        simpleProgressBarHorizontal.setIndeterminate(false);
+                        simpleProgressBarHorizontal.setProgressWithTextPercentage(100);
+                        simpleProgressBarHorizontal.setText("Done...");
+                        simpleProgressBarHorizontal.setTextViewAlignUp();
+                        simpleProgressBarCircular1.setTextViewAlignUp();
+                        //simpleProgressBarHorizontal.setTextViewLeft();
 
                         simpleProgressBarCircular2.setIndeterminate(false);
                         simpleProgressBarCircular2.setProgressWithTextPercentage(100);
@@ -143,7 +150,6 @@ public class MainActivity extends AppCompatActivity {
                         simpleProgressBarCircular3.setProgressWithTextPercentage(100);
                         simpleProgressBarCircular3.setText("Done...");
 
-                        Log.e("SimpleProgressBar","Main IndeterminateTimingCallback onFinish");
                     }
                 });
 
@@ -154,17 +160,13 @@ public class MainActivity extends AppCompatActivity {
                 simpleProgressBarCircular2.show();
                 simpleProgressBarCircular3.show();
 
-                simpleProgressBarHorizontal.setText("Loading...");
-                simpleProgressBarHorizontal.setProgressText("Ok");
-                simpleProgressBarHorizontal.setIndeterminate(true);
-                simpleProgressBarHorizontal.show();
 
-                TextView textView=simpleProgressBarHorizontal.getTextViewItself();
+                /*TextView textView=simpleProgressBarHorizontal.getTextViewItself();
                 textView.setTextColor(Color.RED);
                 textView.setTextSize(30);
 
                 ProgressBar progressBar=simpleProgressBarHorizontal.getProgressBarItself();
-                progressBar.setPadding(10,10,10,10);
+                progressBar.setPadding(10,10,10,10);*/
             }
         });
     }

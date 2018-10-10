@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:id="@+id/constraintLayout"
     android:layout_gravity="center">
 
     <FrameLayout
@@ -22,6 +23,7 @@
             android:minWidth="50dp"
             android:minHeight="50dp"
             android:progress="0"
+            android:visibility="visible"
             android:progressDrawable="@drawable/circular"
             android:secondaryProgress="100" />
 
@@ -42,14 +44,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
         android:gravity="center"
+        android:text="Good"
         android:textSize="16sp"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintVertical_bias="0.5" />
+
 
 </android.support.constraint.ConstraintLayout>

@@ -14,11 +14,16 @@
     </style>
 
     <style name="SimpleProgressBar.ProgressBar" parent="android:Widget.ProgressBar">
-        <item name="android:indeterminateDrawable">@null</item>
+
         <!-- We have support for determinate circular progress drawable. -->
         <item name="android:indeterminateOnly">false</item>
         <item name="android:layout_width">110dp</item>
         <item name="android:layout_height">110dp</item>
+        <item name="android:indeterminateDrawable">@drawable/progressbar_custom</item>
+        <item name="android:progressDrawable">@drawable/circular</item>
+        <item name="android:secondaryProgress">100</item>
+        <item name="android:progress">0</item>
+        <item name="android:max">100</item>
     </style>
 
     <style name="SimpleProgressBar.ProgressBar.Large">

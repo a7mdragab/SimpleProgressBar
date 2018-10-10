@@ -3,24 +3,21 @@ package elshab7.engineering.simpleprogressdialog;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.res.TypedArray;
-import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.media.MediaPlayer;
 import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.constraint.ConstraintLayout;
+import android.support.constraint.ConstraintSet;
 import android.text.TextUtils;
 import android.util.AttributeSet;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.content.res.ColorStateList;
-import android.graphics.PorterDuff;
-import android.graphics.drawable.LayerDrawable;
 import android.widget.Toast;
 
 public class SimpleProgressBar extends ConstraintLayout {
@@ -32,7 +29,7 @@ public class SimpleProgressBar extends ConstraintLayout {
     private Handler mHandler=new Handler();
     private Context mContext;
     private String textCaption;
-    private String style="0";
+    private String mStyle = "0";
 
     public SimpleProgressBar(Context context) {
         super(context);
@@ -54,10 +51,10 @@ public class SimpleProgressBar extends ConstraintLayout {
 
     private void readArray(TypedArray arr) {
         if(arr!=null) {
-            isIndeterminate = arr.getBoolean(R.styleable.SimpleProgressBar_SPB_isIndeteminate, true);
+            isIndeterminate = arr.getBoolean(R.styleable.SimpleProgressBar_SPB_isIndeterminate, true);
             if(arr.hasValue(R.styleable.SimpleProgressBar_SPB_text))textCaption=arr.getString(R.styleable.SimpleProgressBar_SPB_text);
             if(arr.hasValue(R.styleable.SimpleProgressBar_SPB_style)){
-                style=arr.getString(R.styleable.SimpleProgressBar_SPB_style);
+                mStyle = arr.getString(R.styleable.SimpleProgressBar_SPB_style);
             }
         }
     }
@@ -65,8 +62,7 @@ public class SimpleProgressBar extends ConstraintLayout {
     private void init() {
         int layout = R.layout.dialog_view;
         int textSize=16;
-        removeView(this);
-        switch (style){
+        switch (mStyle) {
             case "0":
                 layout=R.layout.dialog_view;
                 break;
@@ -83,6 +79,7 @@ public class SimpleProgressBar extends ConstraintLayout {
                 isHorizontal=true;
                 break;
         }
+
         LayoutInflater.from(mContext).inflate(layout,this);
         mTextView = findViewById(R.id.textView);
         mProgressTxt = findViewById(R.id.progressTxt);
@@ -91,6 +88,102 @@ public class SimpleProgressBar extends ConstraintLayout {
         if(textCaption!=null)setText(textCaption);
         mProgressTxt.setTextSize(textSize);
         clear();
+    }
+
+    public SimpleProgressBar setTextViewAlignLeft() {
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        ConstraintSet mConstraintSet = new ConstraintSet();
+        mConstraintSet.clone(constraintLayout);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.START);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.END);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.START);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.END);
+
+        mConstraintSet.connect(R.id.textView, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.TOP, R.id.constraintLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.LEFT, R.id.constraintLayout, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.RIGHT, R.id.frameLayout, ConstraintSet.LEFT);
+
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.LEFT, R.id.textView, ConstraintSet.RIGHT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.RIGHT, R.id.constraintLayout, ConstraintSet.RIGHT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.TOP, R.id.constraintLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.setVerticalBias(R.id.textView, 0.5f);
+        mConstraintSet.setVerticalBias(R.id.frameLayout, 0.5f);
+        mConstraintSet.applyTo(constraintLayout);
+        return this;
+    }
+
+    public SimpleProgressBar setTextViewAlignRight() {
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        ConstraintSet mConstraintSet = new ConstraintSet();
+        mConstraintSet.clone(constraintLayout);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.START);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.END);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.START);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.END);
+
+        mConstraintSet.connect(R.id.textView, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.TOP, R.id.constraintLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.LEFT, R.id.frameLayout, ConstraintSet.RIGHT);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.RIGHT, R.id.constraintLayout, ConstraintSet.RIGHT);
+
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.RIGHT, R.id.textView, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.LEFT, R.id.constraintLayout, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.TOP, R.id.constraintLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.setVerticalBias(R.id.textView, 0.5f);
+        mConstraintSet.setVerticalBias(R.id.frameLayout, 0.5f);
+        mConstraintSet.applyTo(constraintLayout);
+        return this;
+    }
+
+    public SimpleProgressBar setTextViewAlignDown() {
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        ConstraintSet mConstraintSet = new ConstraintSet();
+        mConstraintSet.clone(constraintLayout);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.START);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.END);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.START);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.END);
+
+        mConstraintSet.connect(R.id.textView, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.LEFT, R.id.constraintLayout, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.RIGHT, R.id.constraintLayout, ConstraintSet.RIGHT);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.TOP, R.id.frameLayout, ConstraintSet.BOTTOM);
+
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.RIGHT, R.id.constraintLayout, ConstraintSet.RIGHT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.LEFT, R.id.constraintLayout, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.TOP, R.id.constraintLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.setHorizontalBias(R.id.textView, 0.5f);
+        mConstraintSet.setHorizontalBias(R.id.frameLayout, 0.5f);
+        mConstraintSet.applyTo(constraintLayout);
+        return this;
+    }
+
+    public SimpleProgressBar setTextViewAlignUp() {
+        ConstraintLayout constraintLayout = findViewById(R.id.constraintLayout);
+        ConstraintSet mConstraintSet = new ConstraintSet();
+        mConstraintSet.clone(constraintLayout);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.START);
+        mConstraintSet.clear(R.id.textView, ConstraintSet.END);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.START);
+        mConstraintSet.clear(R.id.frameLayout, ConstraintSet.END);
+
+        mConstraintSet.connect(R.id.textView, ConstraintSet.BOTTOM, R.id.frameLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.TOP, R.id.constraintLayout, ConstraintSet.TOP);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.LEFT, R.id.constraintLayout, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.textView, ConstraintSet.RIGHT, R.id.constraintLayout, ConstraintSet.RIGHT);
+
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.TOP, R.id.textView, ConstraintSet.BOTTOM);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.RIGHT, R.id.constraintLayout, ConstraintSet.RIGHT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.LEFT, R.id.constraintLayout, ConstraintSet.LEFT);
+        mConstraintSet.connect(R.id.frameLayout, ConstraintSet.BOTTOM, R.id.constraintLayout, ConstraintSet.BOTTOM);
+        mConstraintSet.setHorizontalBias(R.id.textView, 0.5f);
+        mConstraintSet.setHorizontalBias(R.id.frameLayout, 0.5f);
+        mConstraintSet.applyTo(constraintLayout);
+        return this;
     }
 
     public SimpleProgressBar setIndeterminateTintColor(int color){
